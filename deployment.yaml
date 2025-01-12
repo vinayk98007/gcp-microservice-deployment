@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: hello-world
-        image: rancher/hello-world:latest
+        image: us-central1-docker.pkg.dev/palonow-425906/docker-repo/hello-world:latest
         ports:
         - containerPort: 80
 ---

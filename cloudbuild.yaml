@@ -1,0 +1,16 @@
+steps:
+- name: "gcr.io/cloud-builders/docker"
+  args: ["build", "-t", "$REGION-docker.pkg.dev/$PROJECT_ID/docker-repo/hello-world:latest", "."]
+
+- name: "gcr.io/cloud-builders/docker"
+  args: ["push", "$REGION-docker.pkg.dev/$PROJECT_ID/docker-repo/hello-world:latest"]
+
+- name: "gcr.io/cloud-builders/kubectl"
+  args: ["apply", "-f", "k8s-deployment.yaml"]
+  env:
+  - "CLOUDSDK_COMPUTE_REGION=$REGION"
+  - "CLOUDSDK_CONTAINER_CLUSTER=$CLUSTER_NAME"
+
+substitutions:
+  _CLUSTER_NAME: "gke-cluster"
+  _REGION: "us-central1"

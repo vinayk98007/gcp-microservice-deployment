@@ -1,18 +1,19 @@
 steps:
-- name: "gcr.io/cloud-builders/docker"
-  args: ["build", "-t", "us-central1-docker.pkg.dev/palonow-425906/docker-repo/hello-world:latest", "."]
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["build", "-t", "us-central1-docker.pkg.dev/palonow-425906/docker-repo/hello-world:latest", "."]
 
-- name: "gcr.io/cloud-builders/docker"
-  args: ["push", "us-central1-docker.pkg.dev/palonow-425906/docker-repo/hello-world:latest"]
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["push", "us-central1-docker.pkg.dev/palonow-425906/docker-repo/hello-world:latest"]
 
-- name: "gcr.io/cloud-builders/kubectl"
-  args: ["apply", "-f", "deployment.yaml"]
-  env:
-  - "CLOUDSDK_COMPUTE_REGION=$REGION"
-  - "CLOUDSDK_CONTAINER_CLUSTER=$CLUSTER_NAME"
+  - name: "gcr.io/cloud-builders/kubectl"
+    args: ["apply", "-f", "deployment.yaml"]
+    env:
+      - "CLOUDSDK_COMPUTE_REGION=$REGION"
+      - "CLOUDSDK_CONTAINER_CLUSTER=$CLUSTER_NAME"
+
+options:
+  logging: NONE
 
 substitutions:
   _CLUSTER_NAME: "gke-cluster"
   _REGION: "us-central1"
-
-
